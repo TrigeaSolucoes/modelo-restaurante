@@ -77,4 +77,6 @@ a{color:var(--brasa)}
   .painel li{grid-template-columns:1fr}
   .pedir{justify-self:start;margin-top:6px}
 }
-@media (max-width:760px){.marca{font-size:18px}.topo-pedir{font-size:13px;white-space:nowrap}}
+@media (max-width:760px){.marca{font-size:18px}.topo-pedir{font-size:14px;white-space:nowrap}}
+/* revisão de usabilidade no celular */
+@media (max-width:760px){main :is(button,select,input:not([type=checkbox]):not([type=radio]),.botao){min-height:44px}main label:has(>input[type=radio]),main label:has(>input[type=checkbox]){min-height:40px;display:flex;align-items:center;gap:8px}.pedir{display:inline-block;padding:10px 0}.topo-pedir{padding:10px 0}}
