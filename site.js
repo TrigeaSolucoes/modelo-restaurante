@@ -1,15 +1,20 @@
-// Única interação: escolher um horário monta a mensagem do WhatsApp.
-document.querySelectorAll(".agenda").forEach((agenda) => {
-  const botao = agenda.querySelector(".agenda-botao");
-  const base = new URL(agenda.dataset.whatsapp);
-  const negocio = agenda.dataset.negocio;
-  agenda.querySelectorAll(".horario").forEach((h) => {
-    h.addEventListener("click", () => {
-      agenda.querySelectorAll(".horario").forEach((x) => x.setAttribute("aria-pressed", "false"));
-      h.setAttribute("aria-pressed", "true");
-      base.searchParams.set("text", `Olá! Quero agendar em ${negocio}: ${h.dataset.texto}.`);
-      botao.href = base.toString();
-      botao.textContent = `Agendar ${h.dataset.texto}`;
-    });
+// Abas do cardápio (teclado: setas esquerda/direita).
+const abas = [...document.querySelectorAll('[role="tab"]')];
+function abrir(aba) {
+  abas.forEach((a) => {
+    const ativa = a === aba;
+    a.setAttribute("aria-selected", String(ativa));
+    a.tabIndex = ativa ? 0 : -1;
+    document.getElementById(a.getAttribute("aria-controls")).hidden = !ativa;
+  });
+}
+abas.forEach((a, i) => {
+  a.tabIndex = i === 0 ? 0 : -1;
+  a.addEventListener("click", () => abrir(a));
+  a.addEventListener("keydown", (ev) => {
+    const d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+    if (!d) return;
+    const prox = abas[(i + d + abas.length) % abas.length];
+    abrir(prox); prox.focus();
   });
 });
